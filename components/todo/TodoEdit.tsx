@@ -22,7 +22,7 @@ const TodoEdit = ({ todo }: Props) => {
   const onSubmit = (e: any) => {
     e.preventDefault();
 
-    if (!text) return; //text에 아무것도 없을 때 - 공백 입력 방지
+    if (!text) return;
 
     dispatch(
       editTodo({
@@ -35,6 +35,7 @@ const TodoEdit = ({ todo }: Props) => {
 
   useEffect(() => {
     setText(todo.text);
+    textRef.current?.focus();
   }, [todo.text]);
 
   return (

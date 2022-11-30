@@ -19,7 +19,7 @@ const TodoInsert = () => {
   const onSubmit = (e: any) => {
     e.preventDefault();
 
-    if (!text) return; //text에 아무것도 없을 때 - 공백 입력 방지
+    if (!text) return;
 
     dispatch(
       addTodo({
@@ -31,7 +31,7 @@ const TodoInsert = () => {
     );
 
     setText("");
-    textRef.current?.focus(); // 내용 입력 후에도 input창에 focus를 두게 함.
+    textRef.current?.focus();
   };
   return (
     <form onSubmit={onSubmit}>
