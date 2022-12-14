@@ -6,11 +6,11 @@ interface Title {
 
 // page title setting
 const Title = ({ title }: Title) => {
-  const pageTitle = `${title}`;
+  const pageTitle = `${title} - Sumentum`;
   return (
     <>
       <Head>
-        <title>{pageTitle}</title>
+        <title>{title === "Main" ? "Sumentum" : pageTitle}</title>
       </Head>
     </>
   );

@@ -1,11 +1,13 @@
+import { Container } from "styles/Container";
+import Login from "components/Login";
+import Title from "components/Title";
+
 const Home = () => {
   return (
-    <>
-      <div>
-        <p>Hello, what&apos;s your name?</p>
-        <input type="text" />
-      </div>
-    </>
+    <Container>
+      <Title title="Log In" />
+      <Login />
+    </Container>
   );
 };
 
