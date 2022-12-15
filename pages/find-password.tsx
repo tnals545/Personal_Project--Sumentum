@@ -1,4 +1,4 @@
-import Findpassword from "components/Findpassword";
+import Findpassword from "components/account/Findpassword";
 import Title from "components/Title";
 import { Container } from "styles/Container";
 

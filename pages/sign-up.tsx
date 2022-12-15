@@ -1,4 +1,4 @@
-import Signup from "components/Signup";
+import Signup from "components/account/Signup";
 import Title from "components/Title";
 import { Container } from "styles/Container";
 

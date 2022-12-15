@@ -1,5 +1,5 @@
 import { Container } from "styles/Container";
-import Login from "components/Login";
+import Login from "components/account/Login";
 import Title from "components/Title";
 
 const Home = () => {

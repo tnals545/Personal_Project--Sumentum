@@ -3,7 +3,6 @@ import { useRef, useState, useEffect } from "react";
 
 interface Mode {
   mode: string;
-  type?: string;
   headMessage: string;
   guideMessage: string;
 }
@@ -16,7 +15,6 @@ const Signup = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [modeState, setModeState] = useState<Mode>({
     mode: "email",
-    type: "email",
     headMessage: "Welcome!",
     guideMessage: "Please enter your email to sign up.",
   });
@@ -26,7 +24,7 @@ const Signup = () => {
   });
 
   const { isValid, errMessage } = valid;
-  const { mode, type, headMessage, guideMessage } = modeState;
+  const { mode, headMessage, guideMessage } = modeState;
 
   const router = useRouter();
 
@@ -52,7 +50,6 @@ const Signup = () => {
         });
         setModeState({
           mode: "password",
-          type: "password",
           headMessage: "",
           guideMessage: "Please set your password.",
         });
@@ -77,7 +74,6 @@ const Signup = () => {
         });
         setModeState({
           mode: "name",
-          type: "text",
           headMessage: "",
           guideMessage: "Please set your name.",
         });
@@ -116,7 +112,12 @@ const Signup = () => {
       </div>
       <div className="signup-form">
         <form onSubmit={onSubmit}>
-          {mode !== "completed" && <input ref={inputRef} type={type} />}
+          {mode !== "completed" && (
+            <input
+              ref={inputRef}
+              type={mode === "password" ? "password" : "text"}
+            />
+          )}
         </form>
         {!isValid && <span>{errMessage}</span>}
       </div>
