@@ -1,14 +1,12 @@
 import { useRouter } from "next/router";
 import { useRef, useState, useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { setErrMessage, setIsValid } from "redux/slice/accountSlice";
 
 interface Mode {
   mode: string;
   headMessage: string;
   guideMessage: string;
-}
-interface Valid {
-  isValid: boolean;
-  errMessage: string;
 }
 
 const Signup = () => {
@@ -18,15 +16,12 @@ const Signup = () => {
     headMessage: "Welcome!",
     guideMessage: "Please enter your email to sign up.",
   });
-  const [valid, setValid] = useState<Valid>({
-    isValid: true,
-    errMessage: "",
-  });
 
-  const { isValid, errMessage } = valid;
+  const { isValid, errMessage } = useAppSelector((state) => state.account);
   const { mode, headMessage, guideMessage } = modeState;
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -44,10 +39,9 @@ const Signup = () => {
         inputRef.current && emailRegex.test(inputRef.current?.value);
       if (isEmailValid) {
         // 중복되는 이메일이 있는지 확인하는 코드
-        setValid({
-          isValid: true,
-          errMessage: "",
-        });
+        dispatch(setIsValid(true));
+        dispatch(setErrMessage(""));
+
         setModeState({
           mode: "password",
           headMessage: "",
@@ -57,10 +51,8 @@ const Signup = () => {
           inputRef.current.value = "";
         }
       } else {
-        setValid({
-          isValid: false,
-          errMessage: "이메일 형식에 맞지 않습니다.",
-        });
+        dispatch(setIsValid(false));
+        dispatch(setErrMessage("이메일 형식에 맞지 않습니다."));
       }
     }
     // 비밀번호에 대한 input 입력시
@@ -68,10 +60,9 @@ const Signup = () => {
       const isPasswordValid =
         inputRef.current && passwordRegex.test(inputRef.current?.value);
       if (isPasswordValid) {
-        setValid({
-          isValid: true,
-          errMessage: "",
-        });
+        dispatch(setIsValid(true));
+        dispatch(setErrMessage(""));
+
         setModeState({
           mode: "name",
           headMessage: "",
@@ -81,10 +72,12 @@ const Signup = () => {
           inputRef.current.value = "";
         }
       } else {
-        setValid({
-          isValid: false,
-          errMessage: "숫자, 영문자, 특수문자 조합으로 8자 이상 입력해주세요.",
-        });
+        dispatch(setIsValid(false));
+        dispatch(
+          setErrMessage(
+            "숫자, 영문자, 특수문자 조합으로 8자 이상 입력해주세요."
+          )
+        );
       }
     }
     // 이름에 대한 input 입력시

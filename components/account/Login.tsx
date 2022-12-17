@@ -1,22 +1,16 @@
 import { useRouter } from "next/router";
 import { useRef, useState } from "react";
-
-interface Valid {
-  isValid: boolean;
-  errMessage: string;
-}
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { setErrMessage, setIsValid } from "redux/slice/accountSlice";
 
 const Login = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [mode, setMode] = useState<string>("email");
-  const [valid, setValid] = useState<Valid>({
-    isValid: true,
-    errMessage: "",
-  });
 
-  const { isValid, errMessage } = valid;
+  const { isValid, errMessage } = useAppSelector((state) => state.account);
 
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,20 +28,17 @@ const Login = () => {
         inputRef.current && emailRegex.test(inputRef.current?.value);
       if (isEmailValid) {
         // 서버에서 계정 데이터 받아서 가입된 이메일과 일치하는 데이터가 있는지 검사
-        setValid({
-          isValid: true,
-          errMessage: "",
-        });
+        dispatch(setIsValid(true));
+        dispatch(setErrMessage(""));
+
         setMode("password");
 
         if (inputRef.current) {
           inputRef.current.value = "";
         }
       } else {
-        setValid({
-          isValid: false,
-          errMessage: "이메일 형식에 맞지 않습니다.",
-        });
+        dispatch(setIsValid(false));
+        dispatch(setErrMessage("이메일 형식에 맞지 않습니다."));
       }
     }
     // 비밀번호에 대한 input 입력시
@@ -56,17 +47,17 @@ const Login = () => {
         inputRef.current && passwordRegex.test(inputRef.current?.value);
       if (isPasswordValid) {
         // 서버에서 계정 데이터 받아서 가입된 이메일의 비밀번호와 일치하는지 검사
-        setValid({
-          isValid: true,
-          errMessage: "",
-        });
+        dispatch(setIsValid(true));
+        dispatch(setErrMessage(""));
 
         router.push("/main");
       } else {
-        setValid({
-          isValid: false,
-          errMessage: "숫자, 영문자, 특수문자 조합으로 8자 이상 입력해주세요.",
-        });
+        dispatch(setIsValid(false));
+        dispatch(
+          setErrMessage(
+            "숫자, 영문자, 특수문자 조합으로 8자 이상 입력해주세요."
+          )
+        );
       }
     }
   };

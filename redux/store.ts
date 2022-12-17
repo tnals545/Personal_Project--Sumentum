@@ -3,6 +3,7 @@ import createSagaMiddleware from "redux-saga";
 import { all, fork } from "redux-saga/effects";
 import unsplashSaga from "./sagas/unsplashSaga";
 import { todoReducer } from "./slice/todoListSlice";
+import { accountReducer } from "./slice/accountSlice";
 
 const sagaMiddleware = createSagaMiddleware();
 
@@ -12,7 +13,7 @@ function* rootSaga() {
 
 const createStore = () => {
   const store = configureStore({
-    reducer: { todos: todoReducer },
+    reducer: { todos: todoReducer, account: accountReducer },
     // middleware: [sagaMiddleware],
     // devTools: true,
   });
