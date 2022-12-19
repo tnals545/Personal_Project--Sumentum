@@ -1,19 +1,14 @@
 import { getLocation, getWeather } from "pages/api/weatherAPI";
-import { useState, useEffect } from "react";
-
-interface LocationData {
-  key: number;
-  localizedName: string;
-}
-interface WeatherData {
-  temperature: number;
-  weatherIcon: number;
-  weatherText: string;
-}
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
+import { setLocationData, setWeatherData } from "redux/slice/weatherSlice";
+import WeatherIcon from "components/main/WeatherIcon";
 
 const Weather = () => {
-  const [locationData, setLocationData] = useState<LocationData>();
-  const [weatherData, setWeatherData] = useState<WeatherData>();
+  const locationData = useAppSelector((state) => state.weather.locationData);
+  const weatherData = useAppSelector((state) => state.weather.weatherData);
+
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     if (locationData === undefined) {
@@ -23,10 +18,12 @@ const Weather = () => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           }).then((res) =>
-            setLocationData({
-              key: res.data.Key,
-              localizedName: res.data.LocalizedName,
-            })
+            dispatch(
+              setLocationData({
+                key: res.data.Key,
+                localizedName: res.data.LocalizedName,
+              })
+            )
           );
         },
         () => {
@@ -36,22 +33,24 @@ const Weather = () => {
     }
     if (locationData !== undefined) {
       getWeather(locationData.key).then((res) =>
-        setWeatherData({
-          temperature: res.data[0].Temperature.Metric.Value,
-          weatherIcon: res.data[0].WeatherIcon,
-          weatherText: res.data[0].WeatherText,
-        })
+        dispatch(
+          setWeatherData({
+            temperature: res.data[0].Temperature.Metric.Value,
+            weatherIcon: res.data[0].WeatherIcon,
+            weatherText: res.data[0].WeatherText,
+          })
+        )
       );
     }
-  }, [locationData]);
+  }, [dispatch, locationData]);
 
   console.log(locationData, weatherData);
 
   return (
     <div>
+      <WeatherIcon />
       <span>{locationData?.localizedName}</span>
       <span>{weatherData?.temperature}</span>
-      <span>{weatherData?.weatherIcon}</span>
       <span>{weatherData?.weatherText}</span>
     </div>
   );
