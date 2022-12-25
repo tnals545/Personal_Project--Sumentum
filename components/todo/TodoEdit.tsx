@@ -8,7 +8,9 @@ interface Props {
 
 const TodoEdit = ({ todo }: Props) => {
   const textRef = useRef<HTMLInputElement>(null);
-  const [text, setText] = useState<string>("");
+  const [todoText, setTodoText] = useState<string>("");
+
+  const { id, text } = todo;
 
   const dispatch = useAppDispatch();
 
@@ -16,31 +18,36 @@ const TodoEdit = ({ todo }: Props) => {
     const {
       target: { value },
     } = e;
-    setText(value);
+    setTodoText(value);
   };
 
   const onSubmit = (e: any) => {
     e.preventDefault();
 
-    if (!text) return;
+    if (!todoText) return;
 
     dispatch(
       editTodo({
         ...todo,
-        text: text,
+        text: todoText,
       })
     );
-    dispatch(toggleTodoEdit(todo.id));
+    dispatch(toggleTodoEdit(id));
   };
 
   useEffect(() => {
-    setText(todo.text);
+    setTodoText(text);
     textRef.current?.focus();
-  }, [todo.text]);
+  }, [text]);
 
   return (
     <form onSubmit={onSubmit}>
-      <input type="text" value={text} onChange={changeInput} ref={textRef} />
+      <input
+        type="text"
+        value={todoText}
+        onChange={changeInput}
+        ref={textRef}
+      />
     </form>
   );
 };

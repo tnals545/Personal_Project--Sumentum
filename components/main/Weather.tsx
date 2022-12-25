@@ -48,7 +48,9 @@ const Weather = () => {
 
   return (
     <div>
-      <WeatherIcon />
+      <span>
+        <WeatherIcon />
+      </span>
       <span>{locationData?.localizedName}</span>
       <span>{weatherData?.temperature}</span>
       <span>{weatherData?.weatherText}</span>

@@ -19,6 +19,7 @@ interface Props {
 
 const TodoItem = ({ todo }: Props) => {
   const { id, text, done, edit } = todo;
+
   const dispatch = useAppDispatch();
 
   return (

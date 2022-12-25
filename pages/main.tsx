@@ -3,6 +3,10 @@ import { Container } from "styles/Container";
 import Clock from "components/main/Clock";
 import GoogleSearch from "components/main/GoogleSearch";
 import Title from "components/Title";
+import Weather from "components/main/Weather";
+import BackgroundImgInfo from "components/main/BackgroundImgInfo";
+import Todos from "components/todo/Todos";
+import Advice from "components/main/Advice";
 
 interface TodoFocus {
   todoText: string;
@@ -15,6 +19,7 @@ const Main = () => {
     todoText: "",
     isEnter: false,
   });
+  const [todoToggle, setTodoToggle] = useState<boolean>(false);
 
   const { todoText, isEnter } = todoFocus;
 
@@ -30,20 +35,31 @@ const Main = () => {
     <>
       <Container>
         <Title title="Main" />
-        <GoogleSearch />
-        <Clock />
-        <div className="main-text">
+        <div className="header">
+          <Weather />
+        </div>
+        <div className="search">
+          <GoogleSearch />
+        </div>
+        <div className="main">
+          <Clock />
           <span>Good evening, sumin.</span>
           <span>What is your main focus for today?</span>
+          <div className="main-todayFocus">
+            <form onSubmit={onSubmit}>
+              {isEnter ? (
+                <span>{todoText}</span>
+              ) : (
+                <input ref={inputRef} type="text" />
+              )}
+            </form>
+          </div>
         </div>
-        <div className="main-input">
-          <form onSubmit={onSubmit}>
-            {isEnter ? (
-              <span>{todoText}</span>
-            ) : (
-              <input ref={inputRef} type="text" />
-            )}
-          </form>
+        <div className="footer">
+          <BackgroundImgInfo />
+          <Advice />
+          <span onClick={() => setTodoToggle((prev) => !prev)}>Todo</span>
+          {todoToggle && <Todos />}
         </div>
       </Container>
     </>

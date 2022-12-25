@@ -10,14 +10,14 @@ const GetBackgroundImg = () => {
 
   useEffect(() => {
     getUnsplashImage().then((res) => {
-      console.log(res.data);
+      const { data } = res;
       dispatch(
         getBackgroundData({
-          altDescription: res.data.alt_description,
-          photographer: res.data.user.name,
-          imgName: res.data.location.name,
-          html: res.data.links.html,
-          url: res.data.urls.full,
+          altDescription: data.alt_description,
+          photographer: data.user.name,
+          imgName: data.location.name,
+          html: data.links.html,
+          url: data.urls.full,
         })
       );
     });
