@@ -1,4 +1,4 @@
-import { getUnsplashImage } from "pages/api/unsplashAPI";
+import { getBackgroundImageAPI } from "pages/api/unsplashAPI";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { getBackgroundData } from "redux/slice/unsplashSlice";
@@ -9,7 +9,7 @@ const GetBackgroundImg = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    getUnsplashImage().then((res) => {
+    getBackgroundImageAPI().then((res) => {
       const { data } = res;
       dispatch(
         getBackgroundData({

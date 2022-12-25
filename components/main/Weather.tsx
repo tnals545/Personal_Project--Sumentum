@@ -1,4 +1,4 @@
-import { getLocation, getWeather } from "pages/api/weatherAPI";
+import { getLocationAPI, getWeatherAPI } from "pages/api/weatherAPI";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { setLocationData, setWeatherData } from "redux/slice/weatherSlice";
@@ -14,7 +14,7 @@ const Weather = () => {
     if (locationData === undefined) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          getLocation({
+          getLocationAPI({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           }).then((res) =>
@@ -32,7 +32,7 @@ const Weather = () => {
       );
     }
     if (locationData !== undefined) {
-      getWeather(locationData.key).then((res) =>
+      getWeatherAPI(locationData.key).then((res) =>
         dispatch(
           setWeatherData({
             temperature: res.data[0].Temperature.Metric.Value,
