@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
 import { all, fork } from "redux-saga/effects";
-import unsplashSaga from "./sagas/unsplashSaga";
+import getImgSaga from "redux/sagas/unsplashSaga";
 import { todoReducer } from "./slice/todoListSlice";
 import { accountReducer } from "./slice/accountSlice";
 import { weatherReducer } from "./slice/weatherSlice";
@@ -10,7 +10,7 @@ import { unsplashReducer } from "./slice/unsplashSlice";
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
-  yield all([fork(unsplashSaga)]);
+  yield all([fork(getImgSaga)]);
 }
 
 const createStore = () => {
@@ -19,12 +19,11 @@ const createStore = () => {
       todos: todoReducer,
       account: accountReducer,
       weather: weatherReducer,
-      backgroundImg: unsplashReducer,
+      backImg: unsplashReducer,
     },
-    // middleware: [sagaMiddleware],
-    // devTools: true,
+    middleware: [sagaMiddleware],
   });
-  // sagaMiddleware.run(rootSaga);
+  sagaMiddleware.run(rootSaga);
 
   return store;
 };

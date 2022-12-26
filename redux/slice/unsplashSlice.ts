@@ -1,4 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 
 interface Image {
   altDescription: string;
@@ -11,6 +12,7 @@ interface Image {
 interface UnsplashState {
   loading: boolean;
   data: Image;
+  error: AxiosError | unknown;
 }
 
 const initialState: UnsplashState = {
@@ -22,17 +24,27 @@ const initialState: UnsplashState = {
     html: "",
     url: "",
   },
+  error: null,
 };
 
 const unsplashSlice = createSlice({
   name: "background-img",
   initialState,
   reducers: {
-    getBackgroundData: (state, action: PayloadAction<Image>) => {
+    getImgData: (state) => {
+      state.loading = true;
+    },
+    getImgDataSuccess: (state, action: PayloadAction<Image>) => {
       state.data = action.payload;
+      state.loading = false;
+    },
+    getImgDataError: (state, action: PayloadAction<AxiosError | unknown>) => {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });
 
-export const { getBackgroundData } = unsplashSlice.actions;
+export const { getImgData, getImgDataSuccess, getImgDataError } =
+  unsplashSlice.actions;
 export const unsplashReducer = unsplashSlice.reducer;
