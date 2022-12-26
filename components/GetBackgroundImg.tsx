@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { getImgData } from "redux/slice/unsplashSlice";
+import { getImgData } from "redux/slice/backImgSlice";
 import { BackgroundImg } from "styles/BackgroundImg";
 
 const GetBackgroundImg = () => {

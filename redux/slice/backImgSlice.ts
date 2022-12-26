@@ -9,13 +9,13 @@ interface Image {
   url: string;
 }
 
-interface UnsplashState {
+interface BackImgState {
   loading: boolean;
   data: Image;
   error: AxiosError | unknown;
 }
 
-const initialState: UnsplashState = {
+const initialState: BackImgState = {
   loading: false,
   data: {
     altDescription: "",
@@ -27,7 +27,7 @@ const initialState: UnsplashState = {
   error: null,
 };
 
-const unsplashSlice = createSlice({
+const backImgSlice = createSlice({
   name: "background-img",
   initialState,
   reducers: {
@@ -46,5 +46,5 @@ const unsplashSlice = createSlice({
 });
 
 export const { getImgData, getImgDataSuccess, getImgDataError } =
-  unsplashSlice.actions;
-export const unsplashReducer = unsplashSlice.reducer;
+  backImgSlice.actions;
+export const backImgReducer = backImgSlice.reducer;

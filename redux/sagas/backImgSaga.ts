@@ -2,14 +2,14 @@ import {
   getImgData,
   getImgDataSuccess,
   getImgDataError,
-} from "redux/slice/unsplashSlice";
-import { getImgAPI } from "pages/api/unsplashAPI";
+} from "redux/slice/backImgSlice";
+import { getBackImgAPI } from "pages/api/backImgAPI";
 import { all, call, put, takeLatest, fork } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 
 function* getImg() {
   try {
-    const response: AxiosResponse = yield call(getImgAPI);
+    const response: AxiosResponse = yield call(getBackImgAPI);
     yield put(
       getImgDataSuccess({
         altDescription: response.data.alt_description,

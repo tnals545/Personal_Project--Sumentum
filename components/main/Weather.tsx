@@ -17,14 +17,15 @@ const Weather = () => {
           getLocationAPI({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
-          }).then((res) =>
+          }).then((res) => {
+            const resData = res.data.ParentCity;
             dispatch(
               setLocationData({
-                key: res.data.Key,
-                localizedName: res.data.LocalizedName,
+                key: resData.Key,
+                localizedName: resData.LocalizedName,
               })
-            )
-          );
+            );
+          });
         },
         () => {
           alert("Your location could not be found.");
@@ -32,19 +33,18 @@ const Weather = () => {
       );
     }
     if (locationData !== undefined) {
-      getWeatherAPI(locationData.key).then((res) =>
+      getWeatherAPI(locationData.key).then((res) => {
+        const resData = res.data[0];
         dispatch(
           setWeatherData({
-            temperature: res.data[0].Temperature.Metric.Value,
-            weatherIcon: res.data[0].WeatherIcon,
-            weatherText: res.data[0].WeatherText,
+            temperature: resData.Temperature.Metric.Value,
+            weatherIcon: resData.WeatherIcon,
+            weatherText: resData.WeatherText,
           })
-        )
-      );
+        );
+      });
     }
   }, [dispatch, locationData]);
-
-  console.log(locationData, weatherData);
 
   return (
     <div>

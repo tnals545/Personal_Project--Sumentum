@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Container } from "styles/Container";
+
 import Clock from "components/main/Clock";
 import GoogleSearch from "components/main/GoogleSearch";
 import Title from "components/Title";
@@ -7,6 +7,8 @@ import Weather from "components/main/Weather";
 import BackgroundImgInfo from "components/main/BackgroundImgInfo";
 import Todos from "components/todo/Todos";
 import Advice from "components/main/Advice";
+
+import { Container } from "styles/Container";
 
 interface TodoFocus {
   todoText: string;
@@ -43,12 +45,12 @@ const Main = () => {
         </div>
         <div className="main">
           <Clock />
-          <span>Good evening, sumin.</span>
-          <span>What is your main focus for today?</span>
+          <p>Good evening, sumin.</p>
+          <p>What is your main focus for today?</p>
           <div className="main-todayFocus">
             <form onSubmit={onSubmit}>
               {isEnter ? (
-                <span>{todoText}</span>
+                <p>{todoText}</p>
               ) : (
                 <input ref={inputRef} type="text" />
               )}
@@ -58,7 +60,7 @@ const Main = () => {
         <div className="footer">
           <BackgroundImgInfo />
           <Advice />
-          <span onClick={() => setTodoToggle((prev) => !prev)}>Todo</span>
+          <p onClick={() => setTodoToggle((prev) => !prev)}>Todo</p>
           {todoToggle && <Todos />}
         </div>
       </Container>
