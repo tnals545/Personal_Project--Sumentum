@@ -2,9 +2,9 @@ import Link from "next/link";
 import { useAppSelector } from "redux/hooks";
 
 const BackgroundImgInfo = () => {
-  const imgInfo = useAppSelector((state) => state.backgroundImg.data);
+  const backImgInfo = useAppSelector((state) => state.backImg.data);
 
-  const { altDescription, photographer, imgName, html } = imgInfo;
+  const { altDescription, photographer, imgName, html } = backImgInfo;
 
   return (
     <div className="footer-imgInfo">
