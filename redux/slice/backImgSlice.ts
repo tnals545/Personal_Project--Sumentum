@@ -11,13 +11,13 @@ interface Image {
 
 interface BackImgState {
   loading: boolean;
-  data: Image;
+  backImgData: Image;
   error: AxiosError | unknown;
 }
 
 const initialState: BackImgState = {
   loading: false,
-  data: {
+  backImgData: {
     altDescription: "",
     photographer: "",
     imgName: "",
@@ -35,7 +35,7 @@ const backImgSlice = createSlice({
       state.loading = true;
     },
     getImgDataSuccess: (state, action: PayloadAction<Image>) => {
-      state.data = action.payload;
+      state.backImgData = action.payload;
       state.loading = false;
     },
     getImgDataError: (state, action: PayloadAction<AxiosError | unknown>) => {
