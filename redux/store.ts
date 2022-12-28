@@ -6,11 +6,14 @@ import { todoReducer } from "redux/slice/todoListSlice";
 import { accountReducer } from "redux/slice/accountSlice";
 import { weatherReducer } from "redux/slice/weatherSlice";
 import { backImgReducer } from "redux/slice/backImgSlice";
+import { geolocationReducer } from "./slice/geolocationSlice";
+import getLocationSaga from "./sagas/locationSaga";
+import getWeatherSaga from "./sagas/weatherSaga";
 
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
-  yield all([fork(getImgSaga)]);
+  yield all([fork(getImgSaga), fork(getLocationSaga), fork(getWeatherSaga)]);
 }
 
 const createStore = () => {
@@ -19,6 +22,7 @@ const createStore = () => {
       todos: todoReducer,
       account: accountReducer,
       weather: weatherReducer,
+      geolocation: geolocationReducer,
       backImg: backImgReducer,
     },
     middleware: [sagaMiddleware],

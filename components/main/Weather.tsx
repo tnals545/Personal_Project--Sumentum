@@ -1,48 +1,40 @@
-import { getLocationAPI, getWeatherAPI } from "pages/api/weatherAPI";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { setLocationData, setWeatherData } from "redux/slice/weatherSlice";
+
 import WeatherIcon from "components/main/WeatherIcon";
+import { getGeolocationData } from "redux/slice/geolocationSlice";
+import { getLocationData, getWeatherData } from "redux/slice/weatherSlice";
+import store from "redux/store";
 
 const Weather = () => {
-  const locationData = useAppSelector((state) => state.weather.locationData);
-  const weatherData = useAppSelector((state) => state.weather.weatherData);
+  const locationData = useAppSelector(
+    (state) => state.weather.location.locationInfo
+  );
+  const weatherData = useAppSelector(
+    (state) => state.weather.weather.weatherInfo
+  );
 
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    if (locationData === undefined) {
+    if (locationData === null) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          getLocationAPI({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          }).then((res) => {
-            const resData = res.data.ParentCity;
-            dispatch(
-              setLocationData({
-                key: resData.Key,
-                localizedName: resData.LocalizedName,
-              })
-            );
-          });
+          dispatch(
+            getGeolocationData({
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            })
+          );
+          dispatch(getLocationData());
         },
         () => {
           alert("Your location could not be found.");
         }
       );
     }
-    if (locationData !== undefined) {
-      getWeatherAPI(locationData.key).then((res) => {
-        const resData = res.data[0];
-        dispatch(
-          setWeatherData({
-            temperature: resData.Temperature.Metric.Value,
-            weatherIcon: resData.WeatherIcon,
-            weatherText: resData.WeatherText,
-          })
-        );
-      });
+    if (locationData !== null) {
+      dispatch(getWeatherData());
     }
   }, [dispatch, locationData]);
 
