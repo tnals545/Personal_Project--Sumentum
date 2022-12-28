@@ -39,7 +39,7 @@ interface WeatherIconMap {
 
 const WeatherIcon = () => {
   const weatherIcon: any = useAppSelector(
-    (state) => state.weather.weatherData?.weatherIcon
+    (state) => state.weather.weather.weatherInfo?.weatherIcon
   );
 
   const weatherIconMap: WeatherIconMap = {

@@ -11,12 +11,13 @@ interface Image {
 
 interface BackImgState {
   loading: boolean;
-  backImgData: Image;
   error: AxiosError | unknown;
+  backImgData: Image;
 }
 
 const initialState: BackImgState = {
   loading: false,
+  error: null,
   backImgData: {
     altDescription: "",
     photographer: "",
@@ -24,7 +25,6 @@ const initialState: BackImgState = {
     html: "",
     url: "",
   },
-  error: null,
 };
 
 const backImgSlice = createSlice({

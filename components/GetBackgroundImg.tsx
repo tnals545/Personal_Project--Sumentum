@@ -4,7 +4,8 @@ import { getImgData } from "redux/slice/backImgSlice";
 import { BackgroundImg } from "styles/BackgroundImg";
 
 const GetBackgroundImg = () => {
-  const backImgData = useAppSelector((state) => state.backImg.data);
+  const backImgData = useAppSelector((state) => state.backImg.backImgData);
+
   const dispatch = useAppDispatch();
 
   useEffect(() => {

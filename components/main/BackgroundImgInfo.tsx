@@ -2,7 +2,7 @@ import Link from "next/link";
 import { useAppSelector } from "redux/hooks";
 
 const BackgroundImgInfo = () => {
-  const backImgInfo = useAppSelector((state) => state.backImg.data);
+  const backImgInfo = useAppSelector((state) => state.backImg.backImgData);
 
   const { altDescription, photographer, imgName, html } = backImgInfo;
 

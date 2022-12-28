@@ -9,14 +9,14 @@ import { AxiosResponse } from "axios";
 
 function* getImg() {
   try {
-    const response: AxiosResponse = yield call(getBackImgAPI);
+    const res: AxiosResponse = yield call(getBackImgAPI);
     yield put(
       getImgDataSuccess({
-        altDescription: response.data.alt_description,
-        photographer: response.data.user.name,
-        imgName: response.data.location.name,
-        html: response.data.links.html,
-        url: response.data.urls.full,
+        altDescription: res.data.alt_description,
+        photographer: res.data.user.name,
+        imgName: res.data.location.name,
+        html: res.data.links.html,
+        url: res.data.urls.full,
       })
     );
   } catch (error) {
