@@ -3,7 +3,7 @@ import {
   getImgDataSuccess,
   getImgDataError,
 } from "redux/slice/backImgSlice";
-import { getBackImgAPI } from "pages/api/backImgAPI";
+import { getBackImgAPI } from "components/api/backImgAPI";
 import { all, call, put, takeLatest, fork } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
 

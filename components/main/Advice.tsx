@@ -1,4 +1,4 @@
-import { getAdviceAPI } from "pages/api/adviceAPI";
+import { getAdviceAPI } from "components/api/adviceAPI";
 import { useEffect, useState } from "react";
 
 const Advice = () => {

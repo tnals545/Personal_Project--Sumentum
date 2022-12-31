@@ -5,7 +5,7 @@ import {
 } from "redux/slice/weatherSlice";
 import { all, call, put, takeLatest, fork } from "redux-saga/effects";
 import { AxiosResponse } from "axios";
-import { getWeatherAPI } from "pages/api/weatherAPI";
+import { getWeatherAPI } from "components/api/weatherAPI";
 
 function* getWeather() {
   try {
